@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main    # Trigger on push to main branch
+      - main
 
 jobs:
   build:
@@ -20,14 +20,16 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./   # ✅ Ensure this points where package.json is
 
       - name: Run tests
         run: npm test --if-present
+        working-directory: ./   # ✅
 
       - name: Build the app
         run: npm run build
+        working-directory: ./   # ✅
 
-      # Optional Deployment (Example: GitHub Pages)
       - name: Deploy to GitHub Pages
         if: success()
         uses: peaceiris/actions-gh-pages@v3
