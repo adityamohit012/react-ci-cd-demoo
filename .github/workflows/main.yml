@@ -11,26 +11,23 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./   # ✅ Ensure this points where package.json is
 
-      - name: Run tests
+      - name: Run tests (if available)
         run: npm test --if-present
-        working-directory: ./   # ✅
 
-      - name: Build the app
-        run: npm run build
-        working-directory: ./   # ✅
+      - name: Build project (if applicable)
+        run: npm run build --if-present
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy build to GitHub Pages
         if: success()
         uses: peaceiris/actions-gh-pages@v3
         with:
